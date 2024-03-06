@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+// import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+
+import { ThemeProvider } from "@/providers/theme-provider";
+import React from "react";
 import { dark } from "@clerk/themes";
+import { cn } from "@/lib/utils";
 
-
-const inter = Inter({ subsets: ["latin"] });
+// const IBMPlex = IBM_Plex_Sans({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+//   variable: "--font-ibn-plex",
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,14 +21,32 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <ClerkProvider appearance={{baseTheme:dark}}>
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-    </ClerkProvider>
+    <>
+      <ClerkProvider appearance={{ baseTheme: dark }}>
+        <html lang="en" suppressHydrationWarning>
+          <head />
+          <body>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <body
+              // className={cn("font-IBMPlex antialiased", IBMPlex.variable)}
+
+              // There is an issue regarding within adding shadcn so i remove the styling till last
+              >
+                {children}
+              </body>
+            </ThemeProvider>
+          </body>
+        </html>
+      </ClerkProvider>
+    </>
   );
 }

@@ -11,7 +11,6 @@ import clsx from "clsx";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import Image from "next/image";
-import { features } from "process";
 
 export default function Home() {
   return (
